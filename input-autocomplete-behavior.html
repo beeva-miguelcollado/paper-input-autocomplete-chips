@@ -419,7 +419,7 @@
             if (index >= 0) {
               selectedObject = selectedItemElement.dataObject;
 
-              selectedItemText = selectedObject.text;
+              selectedItemText = selectedObject.name;
               this.setSuggestions([]);
               this.inputValue = selectedItemText;
             } else {
@@ -478,7 +478,7 @@
 
         if ( this.localCandidates && this.localCandidates.length ){
           for (var i = 0; i < this.localCandidates.length; i ++){
-            if (patt.test(this.localCandidates[i].text.toLowerCase()) == true){
+            if (patt.test(this.localCandidates[i].name.toLowerCase()) == true){
               matched.push(this.localCandidates[i]);
             }
           }
@@ -504,6 +504,7 @@
           this.xmlhttp = new XMLHttpRequest();
           this.xmlhttp.open('GET', url, true);
           this.xmlhttp.setRequestHeader("Content-type", "application/json");
+          this.xmlhttp.setRequestHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
 
           // If there are extra headers, add them to the request
           if (that.extraHeaders) {
@@ -522,7 +523,7 @@
               if (!responseTreatment.defaultPrevented) {
 
                 for(var i = 0; i < cuttedMatched.length; i++){
-                  cuttedMatched[i].key = that._generateObjectKey(cuttedMatched[i].text);
+                  cuttedMatched[i].key = that._generateObjectKey(cuttedMatched[i].name);
                 }
 
                 that._loading = false;

@@ -227,12 +227,12 @@ Example:
 
       <div class="complete-input-container" id="inputTagsContainer">
 				<template is="dom-repeat" items="[[selectedObjects]]">
-          <paper-chip label="[[chipLabelPrefix]][[item.text]][[chipLabelSuffix]]" data-key="[[item.key]]" data-tag$="[[item.tag]]" data-text="[[item.text]]" data-object="[[item]]" on-remove="_onChipRemove" removable="[[_canRemoveChip(item, readOnly, removeOnly)]]" no-image="[[noChipImage]]">
+          <paper-chip label="[[chipLabelPrefix]][[item.name]][[chipLabelSuffix]]" data-key="[[item.key]]" data-tag$="[[item.tag]]" data-text="[[item.name]]" data-object="[[item]]" on-remove="_onChipRemove" removable="[[_canRemoveChip(item, readOnly, removeOnly)]]" no-image="[[noChipImage]]">
             <template is="dom-if" if="{{item.imgUrl}}">
               <div class="icon avatar-chip-icon"><img src$="[[item.imgUrl]]"></div>
             </template>
             <template is="dom-if" if="{{!item.imgUrl}}">
-              <div class="icon avatar-chip-icon">[[getInitialsFrom(item.text)]]</div>
+              <div class="icon avatar-chip-icon">[[getInitialsFrom(item.name)]]</div>
             </template>
           </paper-chip>
         </template>
@@ -266,15 +266,15 @@ Example:
     <paper-autocomplete-results id="autocompleteResults" class="autocomplete-suggestions" hidden="[[_loading]]" not-circular="[[notCircular]]">
       <template is="dom-if" if="[[!groupedSuggestions]]">
           <template is="dom-repeat" items="{{_suggestions}}">
-            <paper-icon-item class="suggestion-item" data-key="[[item.key]]" data-text="[[item.text]]" data-tag$="[[item.tag]]" data-object="[[item]]" on-mouseover="_onMouseOverSelectable" on-tap="_onTapSelectable"  tabindex="-1" selectable-item>
+            <paper-icon-item class="suggestion-item" data-key="[[item.key]]" data-text="[[item.name]]" data-tag$="[[item.tag]]" data-object="[[item]]" on-mouseover="_onMouseOverSelectable" on-tap="_onTapSelectable"  tabindex="-1" selectable-item>
               <template is="dom-if" if="{{item.imgUrl}}">
                 <div class="icon avatar-result-icon" item-icon><img src$="[[item.imgUrl]]"></div>
               </template>
       <template is="dom-if" if="{{!item.imgUrl}}">
-                <div class="icon avatar-result-icon" item-icon>[[getInitialsFrom(item.text)]]</div>
+                <div class="icon avatar-result-icon" item-icon>[[getInitialsFrom(item.name)]]</div>
               </template>
       <paper-item-body>
-        <div>[[item.text]]</div>
+        <div>[[item.name]]</div>
       </paper-item-body>
       </paper-icon-item>
       </template>
@@ -290,15 +290,15 @@ Example:
       </paper-item-body>
       </paper-icon-item>
       <template is="dom-repeat" items="{{item.items}}">
-              <paper-icon-item class="suggestion-item suggestion-group-item" data-key="[[item.key]]" data-text="[[item.text]]" data-tag$="[[item.tag]]" data-object="[[item]]" on-mouseover="_onMouseOverSelectable" on-tap="_onTapSelectable"  tabindex="-1" selectable-item>
+              <paper-icon-item class="suggestion-item suggestion-group-item" data-key="[[item.key]]" data-text="[[item.name]]" data-tag$="[[item.tag]]" data-object="[[item]]" on-mouseover="_onMouseOverSelectable" on-tap="_onTapSelectable"  tabindex="-1" selectable-item>
                 <template is="dom-if" if="{{item.imgUrl}}">
                   <div class="icon avatar-result-icon" item-icon><img src$="[[item.imgUrl]]"></div>
                 </template>
       <template is="dom-if" if="{{!item.imgUrl}}">
-                  <div class="icon avatar-result-icon" item-icon>[[getInitialsFrom(item.text)]]</div>
+                  <div class="icon avatar-result-icon" item-icon>[[getInitialsFrom(item.name)]]</div>
                 </template>
       <paper-item-body>
-        <div>[[item.text]]</div>
+        <div>[[item.name]]</div>
       </paper-item-body>
       </paper-icon-item>
       </template>
@@ -434,7 +434,7 @@ Example:
           type: Boolean,
           value: false
         },
-	      
+
         noDisplayInputEditLine: {
           type: Boolean,
           value: false
@@ -645,7 +645,7 @@ Example:
 
       _cptInputTextStyle: function (readOnly, removeOnly, noDisplayInputEditLine) {
 	  if (noDisplayInputEditLine) {
-	      this.classList.add('no-display-input-edit-line');	  
+	      this.classList.add('no-display-input-edit-line');
 	  } else {
 	      if (this._canInputText(readOnly, removeOnly)) {
 	          this.classList.remove('no-display-input-edit-line');
@@ -814,7 +814,7 @@ Example:
       clear: function() {
         this.selectedObjects = [];
       },
-      
+
     });
   </script>
 </dom-module>
