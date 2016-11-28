@@ -11,6 +11,7 @@
 <link rel="import" href="../paper-item/paper-item-body.html">
 <link rel="import" href="../paper-chip/paper-chip.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="./input-autocomplete-behavior.html">
 
@@ -215,6 +216,14 @@ Example:
 
     </style>
 
+    <iron-ajax
+      auto
+      url="http://52.19.90.200:8795/skills"
+      handle-as="json"
+      on-response="_handleResponse"
+      debounce-duration="300">
+    </iron-ajax>
+
     <paper-input-container id="paperInputContainer" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
       <input is="iron-input" type="hidden" class="paper-input-input" bind-value="{{hiddenValue}}">
@@ -318,23 +327,6 @@ Example:
         Polymer.PaperInputBehavior,
         WebPaperElem.InputAutoCompleteBehavior
       ],
-
-      _suggestionFilterBeforePublish: function (suggestions) {
-        if (this.removeSelectedFromSuggestions) {
-          var selectedKeys = [];
-          this.selectedObjects.forEach(function (item) {
-            selectedKeys.push(item.key);
-          });
-
-          var filteredSuggestions = suggestions.filter(function (item) {
-            return (selectedKeys.indexOf(item.key) < 0);
-          });
-
-          return filteredSuggestions;
-        } else {
-          return suggestions;
-        }
-      },
 
       properties: {
         chipLabelPrefix: {
@@ -441,6 +433,24 @@ Example:
         },
       },
 
+      listeners: {
+        'tap': '_onTap',
+        'iron-input-validate': '_onIronInputValidate'
+      },
+
+      observers: [
+        '_onInputValueChange(inputValue)',
+        '_onSelectedObjectsChange(selectedObjects)',
+        '_onSelectedObjectsChange(selectedObjects.splices)',
+        '_onAutoCompleteSelectedObjectChange(selectedObject)',
+        '_suggestionsChanged(_suggestions)',
+        '_suggestionsChanged(_suggestions.splices)',
+        '_loadingChanged(_loading)',
+        '_calculateSuggestionPanelPosition(suggestionsPosition)',
+        '_cptReadOnlyOrRemoveOnly(readOnly, removeOnly)',
+        '_cptInputTextStyle(readOnly, removeOnly, noDisplayInputEditLine)'
+      ],
+
       get _paperInputContainerElement() {
         return this.$.paperInputContainer;
       },
@@ -453,9 +463,25 @@ Example:
         return this.$.input;
       },
 
-      listeners: {
-        'tap': '_onTap',
-        'iron-input-validate': '_onIronInputValidate'
+      _handleResponse: function(response) {
+        console.log(response);
+      },
+
+      _suggestionFilterBeforePublish: function (suggestions) {
+        if (this.removeSelectedFromSuggestions) {
+          var selectedKeys = [];
+          this.selectedObjects.forEach(function (item) {
+            selectedKeys.push(item.key);
+          });
+
+          var filteredSuggestions = suggestions.filter(function (item) {
+            return (selectedKeys.indexOf(item.key) < 0);
+          });
+
+          return filteredSuggestions;
+        } else {
+          return suggestions;
+        }
       },
 
       _onTap: function (e) {
@@ -483,19 +509,6 @@ Example:
       _local_paste: function(e){
         this._paste(e);
       },
-
-      observers: [
-        '_onInputValueChange(inputValue)',
-        '_onSelectedObjectsChange(selectedObjects)',
-        '_onSelectedObjectsChange(selectedObjects.splices)',
-        '_onAutoCompleteSelectedObjectChange(selectedObject)',
-        '_suggestionsChanged(_suggestions)',
-        '_suggestionsChanged(_suggestions.splices)',
-        '_loadingChanged(_loading)',
-        '_calculateSuggestionPanelPosition(suggestionsPosition)',
-        '_cptReadOnlyOrRemoveOnly(readOnly, removeOnly)',
-        '_cptInputTextStyle(readOnly, removeOnly, noDisplayInputEditLine)'
-      ],
 
       _onInputValueChange: function (inputValue) {
         var hasSelectedObjects = ((this.selectedObjects) && (this.selectedObjects.length > 0));
