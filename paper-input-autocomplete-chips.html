@@ -220,7 +220,7 @@ Example:
       auto
       url="http://52.19.90.200:8795/skills"
       handle-as="json"
-      on-response="_handleResponse"
+      last-response="{{localCandidates}}"
       debounce-duration="300">
     </iron-ajax>
 
@@ -461,10 +461,6 @@ Example:
 
       get $input() {
         return this.$.input;
-      },
-
-      _handleResponse: function(response) {
-        console.log(response);
       },
 
       _suggestionFilterBeforePublish: function (suggestions) {

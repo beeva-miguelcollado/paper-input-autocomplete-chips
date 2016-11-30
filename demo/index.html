@@ -56,81 +56,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <paper-material class="demo-paper" style="height: 300px; overflow: auto;">
         <p>An example of <code>&lt;paper-input-autocomplete-chips&gt;</code>:</p>
 
-        <paper-input-autocomplete-chips local-candidates="{{states}}" label="Chips"
-          remote-url="http://52.19.90.200:8795/skills">
+        <paper-input-autocomplete-chips local-candidates="{{states}}" label="Chips">
         </paper-input-autocomplete-chips>
       </paper-material>
-
-      <script>
-        window.addEventListener('WebComponentsReady', function() {
-
-          var app = document.querySelector('#app');
-
-          app.onTestAppendSelectedObjects = function () {
-            document.getElementById('myAutoCompletePOCUnknownItems').appendSelectedObject({
-              text: 'NewItem',
-              readOnly: true
-            });
-          };
-
-          app.onTestSetReadOnlyObjects = function () {
-              var autoComplete = document.getElementById('myAutoCompletePOCUnknownItems');
-
-              autoComplete.readOnly = !autoComplete.readOnly;
-          };
-
-          app.onTestSetRemoveOnlyObjects = function () {
-              var autoComplete = document.getElementById('myAutoCompletePOCUnknownItems');
-
-              autoComplete.removeOnly = !autoComplete.removeOnly;
-          };
-
-          app.onSetDefaultValue = function () {
-            document.getElementById('myAutoComplete').selectedObject = app.states[0];
-          };
-
-          app.onToggleDisabled = function () {
-            var $el = document.getElementById('myAutoCompletePOC');
-            $el.disabled = !$el.disabled;
-          };
-
-          app.onSwitchSuggestionPanelPosition = function () {
-            var $el = document.getElementById('myAutoCompletePOC');
-            //console.debug($el.suggestionsPosition);
-            $el.suggestionsPosition = ($el.suggestionsPosition === 'top') ? 'bottom' : 'top';
-          };
-
-          app._allowUnknown_onSelectedObjectsChanged = function (e) {
-            //console.debug('[_allowUnknown_onSelectedObjectsChanged]', e.target.selectedObjects);
-          };
-
-          app._allowUnknown_onSelectingObject = function (e) {
-
-            if (e.detail.selectedObject.text.indexOf('@') === 0) {
-                e.preventDefault();
-            }
-
-            if (e.detail.selectedObject.text.indexOf('#') === 0) {
-                e.detail.selectedObject.text = e.detail.selectedObject.text.substring(1);
-            }
-          };
-
-          app.XHRResponseTreatment = function(e){
-            var length = e.detail.response.length;
-
-            for(var i = 0; i < length; i++){
-              e.detail.response[i].text = e.detail.response[i].t;
-              e.detail.response[i].imgUrl = e.detail.response[i].i;
-            }
-          };
-
-          app._pasteHandler = function( text ){
-            return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi);
-          };
-
-          var autocompletePOC = document.getElementById('myAutoCompletePOC');
-        });
-      </script>
     </template>
   </body>
 </html>
