@@ -241,9 +241,10 @@ Polymer({
 
   _fixMissingObjextKeys: function (objectArray) {
     if (objectArray && (objectArray instanceof Array)) {
+      var self = this;
       objectArray.forEach(function(obj) {
         if (!obj.key) {
-          obj.key = this._generateObjectKey(obj.name);
+          obj.key = self._generateObjectKey(obj.name);
         }
       });
     }
