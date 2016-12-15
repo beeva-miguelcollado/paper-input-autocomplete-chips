@@ -216,14 +216,6 @@ Example:
 
     </style>
 
-    <iron-ajax
-      auto
-      url="http://52.19.90.200:8795/skills"
-      handle-as="json"
-      last-response="{{localCandidates}}"
-      debounce-duration="300">
-    </iron-ajax>
-
   <paper-input-container id="paperInputContainer" no-label-float="[[noLabelFloat]]" always-float-label="[[_computeAlwaysFloatLabel(alwaysFloatLabel,placeholder)]]" auto-validate$="[[autoValidate]]" disabled$="[[disabled]]" invalid="[[invalid]]">
 
     <input is="iron-input" type="hidden" class="paper-input-input" bind-value="{{hiddenValue}}">
@@ -337,5 +329,5 @@ Example:
   </template>
 
   <script src="paper-input-autocomplete-chips.js"></script>
-  
+
 </dom-module>
