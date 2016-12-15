@@ -243,8 +243,7 @@ Polymer({
     if (objectArray && (objectArray instanceof Array)) {
       objectArray.forEach(function(obj) {
         if (!obj.key) {
-          //FIXME: Ver por qué falla
-          obj.key = this._generateObjectKey(obj.text);
+          obj.key = this._generateObjectKey(obj.name);
         }
       });
     }
